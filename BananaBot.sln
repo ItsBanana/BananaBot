@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "BananaBot", "BananaBot.njsproj", "{1830791B-0370-430A-B0A9-828D80E9A87B}"
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "BananaBot", "BananaBot.njsproj", "{CF382C68-B97C-4B39-90BD-89F13A055405}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1830791B-0370-430A-B0A9-828D80E9A87B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1830791B-0370-430A-B0A9-828D80E9A87B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1830791B-0370-430A-B0A9-828D80E9A87B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1830791B-0370-430A-B0A9-828D80E9A87B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF382C68-B97C-4B39-90BD-89F13A055405}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF382C68-B97C-4B39-90BD-89F13A055405}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF382C68-B97C-4B39-90BD-89F13A055405}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF382C68-B97C-4B39-90BD-89F13A055405}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
