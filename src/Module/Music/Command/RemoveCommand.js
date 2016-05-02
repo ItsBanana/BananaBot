@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const AbstractCommand = require('bananabot-base').AbstractCommand,
+const AbstractCommand = require('../AbstractCommand'),
       Playlist = require('../Model/Playlist');
 
 class RemoveCommand extends AbstractCommand {
@@ -26,6 +26,10 @@ class RemoveCommand extends AbstractCommand {
         });
 
         this.matches(/^remove ([\w\d_\-]+)$/, (matches) => {
+            if (!this.isDJ()) {
+                return this.reply("I believe you are not the DJ here!", true);
+            }
+
             let name = matches[1];
 
             Playlist.findOne({ name: name }, (err, playlist) => {
@@ -43,6 +47,10 @@ class RemoveCommand extends AbstractCommand {
         });
 
         this.matches(/^remove ([\w\d_\-]+) (\d+)$/, (matches) => {
+            if (!this.isDJ()) {
+                return this.reply("I believe you are not the DJ here!", true);
+            }
+
             let name = matches[1],
                 index = matches[2] - 1;
 

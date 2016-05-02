@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const AbstractCommand = require('bananabot-base').AbstractCommand;
+const AbstractCommand = require('../AbstractCommand');
 
 class PlayCommand extends AbstractCommand {
     static get name() {

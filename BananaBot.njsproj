@@ -16,6 +16,19 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="src\Module\Music\AbstractCommand.js" />
+    <Compile Include="src\Module\Music\Command\AddTrackCommand.js" />
+    <Compile Include="src\Module\Music\Command\CreatePlaylistCommand.js" />
+    <Compile Include="src\Module\Music\Command\JoinVoiceCommand.js" />
+    <Compile Include="src\Module\Music\Command\PlaylistCommand.js" />
+    <Compile Include="src\Module\Music\Command\PlayCommand.js" />
+    <Compile Include="src\Module\Music\Command\PlaylistsCommand.js" />
+    <Compile Include="src\Module\Music\Command\RemoveCommand.js" />
+    <Compile Include="src\Module\Music\Helper\PlaybackHelper.js" />
+    <Compile Include="src\Module\Music\Model\Playlist.js" />
+    <Compile Include="src\Module\Music\Model\Track.js" />
+    <Compile Include="src\Module\Music\MusicModule.js" />
+    <Compile Include="src\Module\Music\Parser.js" />
     <Content Include="config.example.json" />
     <Content Include="config.json" />
     <Content Include="package.json" />
@@ -24,6 +37,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src" />
+    <Folder Include="src\Module\" />
+    <Folder Include="src\Module\Music\" />
+    <Folder Include="src\Module\Music\Command\" />
+    <Folder Include="src\Module\Music\Model\" />
+    <Folder Include="src\Module\Music\Helper\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->

@@ -53,7 +53,7 @@ class PlaylistCommand extends AbstractCommand {
                         break;
                     }
 
-                    user = this.client.users.get('id', song.user);
+                    user = this.client.users.get('id', track.user);
 
                     if (message.length >= 1800) {
                         delay += 50;

@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-const AbstractCommand = require('bananabot-base').AbstractCommand,
+const AbstractCommand = require('../AbstractCommand'),
       Playlist = require('../Model/Playlist');
 
 class CreatePlaylistCommand extends AbstractCommand {
@@ -26,6 +26,10 @@ class CreatePlaylistCommand extends AbstractCommand {
         });
 
         this.matches(/^create ([\w\d_\-\s]+)$/, (matches) => {
+            if (!this.isDJ()) {
+                return this.reply("I believe you are not the DJ here!", true);
+            }
+
             let name = matches[1];
 
             if (name.indexOf(' ') >= 0 || name.indexOf("\t") >= 0) {

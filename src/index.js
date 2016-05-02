@@ -2,7 +2,9 @@
 
 const pkg = require('../package');
 const env = process.env;
+const path = require('path');
 const Bot = require('bananabot-base').Bot;
+const PlaybackHelper = require('./Module/Music/Helper/PlaybackHelper');
 
 try {
     let config = require('../config.json');
@@ -37,7 +39,31 @@ let options = {
 
     modules: [
         require('./Module/Music/MusicModule')
-    ]
+    ],
+
+    container: (Bot) => {
+        return {
+            parameters: {
+                download_dir: path.join(__dirname, '../cache'),
+                remove_after_skips: 5,
+                volume: 20
+            },
+            services: {
+                'helper.playback': {
+                    module: PlaybackHelper,
+                    args: [
+                        '@dispatcher',
+                        '@client',
+                        '@logger',
+                        '@brain.memory',
+                        '%download_dir%',
+                        '%volume%',
+                        '%remove_after_skips%'
+                    ]
+                }
+            }
+        }
+    }
 };
 
 new Bot('dev', true, options);

@@ -18,6 +18,9 @@
   "homepage": "https://github.com/ItsBanana/BananaBot#readme",
   "dependencies": {
     "bananabot-base": "github:itsbanana/BananaBot-Base",
-    "mongoose": "^4.4.14"
+    "mongoose": "^4.4.14",
+    "path": "^0.12.7",
+    "slug": "^0.9.1",
+    "youtube-dl": "^1.11.1"
   }
 }
