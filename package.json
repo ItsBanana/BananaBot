@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ItsBanana/BananaBot#readme",
   "dependencies": {
-    "bananabot-base": "github:itsbanana/BananaBot-Base"
+    "bananabot-base": "github:itsbanana/BananaBot-Base",
+    "mongoose": "^4.4.14"
   }
 }

@@ -13,6 +13,7 @@ try {
     env.DISCORD_AUTH_PASSWORD = config.auth.password;
     env.DISCORD_PREFIX = config.prefix;
     env.DISCORD_STATUS = config.status;
+    env.DISCORD_MONGO_URL = config.mongo_url;
 } catch (e) {
     console.log(e);
     console.log('Config file not found, falling back on environment variables.');
@@ -32,7 +33,11 @@ let options = {
     prefix: env.DISCORD_PREFIX,
     status: env.DISCORD_STATUS,
 
-    modules: []
+    mongo_url: env.DISCORD_MONGO_URL,
+
+    modules: [
+        require('./Module/Music/MusicModule')
+    ]
 };
 
 new Bot('dev', true, options);
