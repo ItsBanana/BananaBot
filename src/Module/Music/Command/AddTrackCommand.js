@@ -42,70 +42,40 @@ class AddTrackCommand extends AbstractCommand {
                     return this.reply("Could not find playlist with that name.");
                 }
 
-                this.reply(
+                /*this.reply(
                     "Fetching information. If this is a playlist, it could take a bit.", (error, message) => {
                         this.fetchingMessage = message;
                     }
-                );
+                );*/
 
-                this.helper.download(url, this.addSongs.bind(this, playlist));
+                this.helper.fetchTrack(url).then(this.addTrack.bind(this, playlist));
+                //this.helper.download(url, this.addSongs.bind(this, playlist));
             });
         });
     }
 
-    addSongs(playlist, tracks) {
-        let requests = tracks.map(this.addSong.bind(this, playlist));
-        Promise.all(requests).then((values) => {
-            this.client.deleteMessage(this.fetchingMessage);
+    addTrack(playlist, info) {
+        if (playlist.tracks.find(track => track.link === info.link)) {
+            this.reply(`The track **${info.title}** was already added to **${playlist.name}**`);
+        }
 
-            let errors = values.filter(err => err !== undefined);
-            if (errors) {
-                this.reply(errors.join("\n"));
-
-                if (errors.length === tracks.length) {
-                    return;
-                }
-            }
-
-            playlist.save(error => {
-                if (error) {
-                    this.reply('There was an issue adding your tracks.');
-                    this.logger.error(error);
-
-                    return false;
-                }
-
-                let added = tracks.length - errors.length;
-                this.client.reply(`You have added **${added}** song${added == 1 ? 's' : ''} to **${playlist.name}**,`);
-            })
-        }).catch(this.logger.error);
-    }
-
-
-    addSong(playlist, info) {
-        return new Promise(resolve => {
-            if (!info) {
-                resolve();
-            }
-
-            this.logger.debug(`Adding ${info.title} to ${playlist.name}`);
-
-            if (playlist.tracks.find(song => song.link === info.webpage_url)) {
-                this.logger.debug(`Song already added: **${info.title}**`);
-
-                return resolve(`Song already added: **${info.title}**`);
-            }
-
-            playlist.tracks.push({
-                name: info.title,
-                thumbnail: info.thumbnail,
-                link: info.webpage_url,
-                duration: info.duration,
-                user: this.author.id
-            });
-
-            resolve();
+        playlist.tracks.push({
+            name: info.title,
+            thumbnail: info.thumbnail_url,
+            link: info.link,
+            duration: info.length_seconds,
+            user: this.author.id
         });
+
+        playlist.save(error => {
+            if (error) {
+                this.reply('There was an issue adding your track.');
+                this.logger.error(error);
+                return false;
+            }
+
+            this.reply(`You have added **${info.title}** to the playlist **${playlist.name}**.`);
+        })
     }
 }
 

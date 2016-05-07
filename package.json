@@ -21,6 +21,8 @@
     "mongoose": "^4.4.14",
     "path": "^0.12.7",
     "slug": "^0.9.1",
-    "youtube-dl": "^1.11.1"
+    "youtube-api": "^1.4.1",
+    "youtube-dl": "^1.11.1",
+    "ytdl-core": "^0.7.14"
   }
 }

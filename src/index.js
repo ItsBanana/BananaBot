@@ -4,7 +4,8 @@ const pkg = require('../package');
 const env = process.env;
 const path = require('path');
 const Bot = require('bananabot-base').Bot;
-const PlaybackHelper = require('./Module/Music/Helper/PlaybackHelper');
+const MusicHelper = require('./Module/Music/Helper/MusicHelper');
+const PlaylistHelper = require('./Module/Music/Helper/PlaylistHelper');
 
 try {
     let config = require('../config.json');
@@ -44,21 +45,30 @@ let options = {
     container: (Bot) => {
         return {
             parameters: {
-                download_dir: path.join(__dirname, '../cache'),
                 remove_after_skips: 5,
-                volume: 20
+                volume: 10,
+                youtube_api_key: 'AIzaSyDdmViX4so3V7lYsxAZuON0jaCEbqIjkEw'
             },
             services: {
-                'helper.playback': {
-                    module: PlaybackHelper,
+                'helper.music': {
+                    module: MusicHelper,
                     args: [
+                        '@container',
                         '@dispatcher',
                         '@client',
                         '@logger',
                         '@brain.memory',
-                        '%download_dir%',
                         '%volume%',
                         '%remove_after_skips%'
+                    ]
+                },
+                'helper.playlist': {
+                    module: PlaylistHelper,
+                    args: [
+                        '@container',
+                        '@logger',
+                        '@brain.memory',
+                        '%youtube_api_key%'
                     ]
                 }
             }

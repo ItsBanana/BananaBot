@@ -67,7 +67,7 @@ class RemoveCommand extends AbstractCommand {
                     return this.reply("No track with that index exists.")
                 }
 
-                let track = playlist.songs[index];
+                let track = playlist.tracks[index];
                 playlist.tracks.splice(index, 1);
                 playlist.save();
 

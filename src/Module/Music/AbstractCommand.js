@@ -6,7 +6,8 @@ class AbstractCommand extends BaseAbstractCommand {
     initialize() {
         super.initialize();
 
-        this.helper = this.container.get('helper.playback');
+        //this.helper = this.container.get('helper.playback');
+        this.helper = this.container.get('helper.music');
         this.memory = this.container.get('brain.memory');
     }
 

@@ -1,8 +1,9 @@
 ﻿'use strict';
 
-const Schema = require('mongoose').Schema;
+const Schema = require('mongoose').Schema,
+      Parser = require('../Parser');
 
-module.exports = new Schema({
+let Track = new Schema({
     name: String,
     author: String,
     link: String,
@@ -15,3 +16,5 @@ module.exports = new Schema({
         default: Date.now
     }
 });
+
+module.exports = Track;

@@ -46,7 +46,11 @@ class JoinVoiceCommand extends AbstractCommand {
                 channel => channel instanceof Discord.VoiceChannel && channel.name === name);
 
             if (channel) {
-                this.client.joinVoiceChannel(channel).then(() => {
+                this.client.joinVoiceChannel(channel).catch(err => {
+                    this.reply(`I am truely sorry but I cannot join that channel :(`, true);
+                    //this.reply(err);
+                    this.logger.error(err);
+                }).then(() => {
                     this.reply(`Hello everyone in **${channel.name}**, ready to hear some music?`);
                 });
             } else {
