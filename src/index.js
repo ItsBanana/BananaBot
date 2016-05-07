@@ -10,13 +10,14 @@ const PlaylistHelper = require('./Module/Music/Helper/PlaylistHelper');
 try {
     let config = require('../config.json');
 
-    env.DISCORD_ADMIN_ID = config.admin_id;
-    env.DISCORD_AUTH_TOKEN = config.auth.token;
-    env.DISCORD_AUTH_EMAIL = config.auth.email;
-    env.DISCORD_AUTH_PASSWORD = config.auth.password;
-    env.DISCORD_PREFIX = config.prefix;
-    env.DISCORD_STATUS = config.status;
-    env.DISCORD_MONGO_URL = config.mongo_url;
+    env.CFG_DEBUG = config.debug;
+    env.CFG_ADMIN_ID = config.admin_id;
+    env.CFG_AUTH_TOKEN = config.auth.token;
+    env.CFG_AUTH_EMAIL = config.auth.email;
+    env.CFG_AUTH_PASSWORD = config.auth.password;
+    env.CFG_PREFIX = config.prefix;
+    env.CFG_STATUS = config.status;
+    env.CFG_MONGO_URL = config.mongo_url;
 } catch (e) {
     console.log(e);
     console.log('Config file not found, falling back on environment variables.');
@@ -27,16 +28,18 @@ let options = {
     version: pkg.version,
     author: pkg.author,
 
-    admin_id: env.DISCORD_ADMIN_ID,
+    debug: env.CFG_DEBUG === 'true',
 
-    token: env.DISCORD_AUTH_TOKEN,
-    email: env.DISCORD_AUTH_EMAIL,
-    password: env.DISCORD_AUTH_PASSWORD,
+    admin_id: env.CFG_ADMIN_ID,
 
-    prefix: env.DISCORD_PREFIX,
-    status: env.DISCORD_STATUS,
+    token: env.CFG_AUTH_TOKEN,
+    email: env.CFG_AUTH_EMAIL,
+    password: env.CFG_AUTH_PASSWORD,
 
-    mongo_url: env.DISCORD_MONGO_URL,
+    prefix: env.CFG_PREFIX,
+    status: env.CFG_STATUS,
+
+    mongo_url: env.CFG_MONGO_URL,
 
     modules: [
         require('./Module/Music/MusicModule')
@@ -76,4 +79,4 @@ let options = {
     }
 };
 
-new Bot('dev', true, options);
+new Bot(options);

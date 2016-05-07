@@ -4,6 +4,7 @@
     "email": "Discord email here (remove this like if you are using the token)",
     "password": "Discord password here (remove this like if you are using the token)"
   },
+  "debug": false,
   "admin_id": "Your user id of your OWN! account not the bot's. You can get this by \@yourdiscordname but don't copy over the <@ and >",
   "status": "Some status u want on your discord bot...",
   "prefix": "!",
