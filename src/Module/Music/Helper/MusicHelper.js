@@ -201,12 +201,12 @@ class MusicHelper {
 
             this.client.setStatus('online', track.name);
 
-            this.stream = stream;
             this.playing = track;
 
             this.dispatcher.emit('play', track);
 
             stream.on('end', this.nextInQueue);
+            stream.on('error', this.logger.error);
         }).catch(this.logger.error);
     }
 
