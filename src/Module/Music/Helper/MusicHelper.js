@@ -202,6 +202,7 @@ class MusicHelper {
             this.client.setStatus('online', track.name);
 
             this.playing = track;
+            this.currentPlayingStream = stream;
 
             this.dispatcher.emit('play', track);
 
@@ -252,7 +253,7 @@ class MusicHelper {
 
     stopPlaying(callback) {
         this.playing = false;
-        this.stream.removeListener('end', this.nextInQueue);
+        this.currentPlayingStream.removeListener('end', this.nextInQueue);
         this.client.setStatus('online', null);
         if (this.client.voiceConnection !== null) {
             this.client.voiceConnection.stopPlaying();
