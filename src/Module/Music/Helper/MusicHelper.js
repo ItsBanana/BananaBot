@@ -133,7 +133,11 @@ class MusicHelper {
 
     nextInQueue() {
         if (this.isPlaying()) {
-            this.memory.del(`skip.${this.playlist.name}.${this.playing.name}`);
+            try {
+                this.memory.del(`skip.${this.helper.playlist.name}`);
+            } catch (e) {
+                this.logger.error(e);
+            }
             this.stopPlaying();
         }
 
@@ -186,6 +190,7 @@ class MusicHelper {
     play(track, seek) {
         this.stream = ytdl(track.link, {
             filter: format => format.container === 'mp4',
+            quality: 'lowest'
         });
 
         this.stream.on('error', this.logger.error);
