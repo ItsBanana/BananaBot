@@ -25,8 +25,8 @@ class VolumeCommand extends AbstractCommand {
         });
 
         this.matches(/^volume (\d+)$/, (matches) => {
-            if (!this.isDJ) {
-                return;
+            if (!this.isDJ()) {
+                return this.reply("I believe you are not the DJ here!", true);
             }
 
             let volume = parseInt(matches[1]);
