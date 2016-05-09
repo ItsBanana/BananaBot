@@ -4,23 +4,7 @@ const ytdl = require('ytdl-core'),
       Parser = require('../Parser');
 
 class MusicHelper {
-    get playing() {
-        return this._playing || false;
-    }
-
-    set playing(value) {
-        this._playing = value;
-    }
-
-    get channel() {
-        return this._channel;
-    }
-
-    set channel(value) {
-        this._channel = value;
-    }
-
-    constructor(container, dispatcher, client, logger, brain, volume, removeAfterSkips) {
+    constructor(container, dispatcher, client, logger, brain, volume) {
         this.container = container;
         this.dispatcher = dispatcher;
         this.client = client;
@@ -28,11 +12,14 @@ class MusicHelper {
         this.brain = brain;
         this.current = -1;
         this.volume = volume / 100;
-        this.removeAfterSkips = removeAfterSkips;
 
-        this.stream = null;
+        this.channel = false;
+
+        this.trackStream = false;
+        this.currentStream = false;
+        this.currentTrack = false;
+
         this.queueMessages = [];
-
 
         //To fix stuff, always bind this to the following functions
         this.skip = this.skip.bind(this);
@@ -84,7 +71,7 @@ class MusicHelper {
     }
 
     isPlaying() {
-        return this.playing !== false;
+        return this.currentTrack !== false;
     }
 
     buildQueue(playlist) {
@@ -109,7 +96,7 @@ class MusicHelper {
     getQueueText() {
         let time = Parser.parseMilliseconds(this.getCurrentTime(true)),
             message = `Now Playing:
-**${this.playing.name}** - \`[${time} / ${Parser.parseSeconds(this.playing.duration)}]\`
+**${this.currentTrack.name}** - \`[${time} / ${Parser.parseSeconds(this.currentTrack.duration)}]\`
 
 `;
 
@@ -163,10 +150,9 @@ class MusicHelper {
             let regexHelper = this.container.get('helper.regex');
             //this.logger.debug(link);
             // Check if the link is an youtube link.
-            regexHelper.getMatches(link, /(?:https ?:\/\/)?(?:youtu\.be\/|(?:www\.)?youtube\.com\/watch(?:\.php)?\?.*v=)([a-zA-Z0-9\-_]+)/g, matches => {
+            regexHelper.getMatches(link, /(?:https?:\/\/)?(?:youtu\.be\/|(?:www\.)?youtube\.com\/watch(?:\.php)?\?.*v=)([a-zA-Z0-9\-_]+)/g, matches => {
                 if (matches) {
                     ytdl.getInfo(matches[0], (err, info) => {
-                        this.logger.debug(`Fetched shit for the video: ${link}`);
                         if (err) reject(err);
                         else {
                             info.link = link;
@@ -182,32 +168,35 @@ class MusicHelper {
 
     skip(callback) {
         if (callback !== undefined) {
-            callback(this.playing);
+            callback(this.currentTrack);
         }
         this.stopPlaying(this.nextInQueue);
     }
 
     play(track, seek) {
-        this.stream = ytdl(track.link, {
+        this.trackStream = ytdl(track.link, {
             filter: format => format.container === 'mp4',
             quality: 'lowest'
         });
 
-        this.stream.on('error', this.logger.error);
+        this.trackStream.on('error', err => {
+            // Yea fk off write after end error me no liekee uu.
+            if (err.code !== undefined) this.logger.error(err);
+        });
 
         seek = seek || 0;
-        this.client.voiceConnection.playRawStream(this.stream, { volume: this.volume, seek: seek }).then(stream => {
+        this.client.voiceConnection.playRawStream(this.trackStream, { volume: this.volume, seek: seek }).then(stream => {
             this.seekVal = seek > 0 ? seek : false;
 
             this.client.setStatus('online', track.name);
 
-            this.playing = track;
-            this.currentPlayingStream = stream;
+            this.currentTrack = track;
+            this.currentStream = stream; // The 2 streams aint the same...remember that!
 
             this.dispatcher.emit('play', track);
 
-            stream.on('end', this.nextInQueue);
-            stream.on('error', this.logger.error);
+            this.currentStream.on('end', this.trackStream.destroy); // Fix for #1 ?
+            this.currentStream.on('end', this.nextInQueue);
         }).catch(this.logger.error);
     }
 
@@ -252,8 +241,9 @@ class MusicHelper {
     }
 
     stopPlaying(callback) {
-        this.playing = false;
-        this.currentPlayingStream.removeListener('end', this.nextInQueue);
+        this.currentTrack = false;
+        this.currentStream.removeListener('end', this.nextInQueue);
+        this.trackStream.destroy(); // Fix for #1 ?
         this.client.setStatus('online', null);
         if (this.client.voiceConnection !== null) {
             this.client.voiceConnection.stopPlaying();

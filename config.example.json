@@ -6,6 +6,7 @@
   },
   "debug": false,
   "admin_id": "Your user id of your OWN! account not the bot's. You can get this by \@yourdiscordname but don't copy over the <@ and >",
+  "youtube_api_key": "Your youtube api key",
   "status": "Some status u want on your discord bot...",
   "prefix": "!",
   "mongo_url": "mongodb://localhost/bananabot"

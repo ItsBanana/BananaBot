@@ -19,7 +19,7 @@ class PlayingCommand extends AbstractCommand {
             }
 
             let time = Parser.parseMilliseconds(this.helper.getCurrentTime(true)),
-                track = this.helper.playing;
+                track = this.helper.currentTrack;
 
             this.reply(`Now Playing:
 **${track.name}** - \`[${time} / ${Parser.parseSeconds(track.duration)}]\``);

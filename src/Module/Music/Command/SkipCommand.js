@@ -41,9 +41,9 @@ class SkipCommand extends AbstractCommand {
                     neededUsers = Math.round(currentUsers * (neededUsersP / 100));
 
                 if (votedUsersP < 50) {
-                    this.reply(`You voted to skip **${this.helper.playing.name}**.`);
+                    this.reply(`You voted to skip **${this.helper.currentTrack.name}**.`);
                     setTimeout(() => {
-                        this.reply(`Currently \`${votedUsersP}%\` of the users have voted to skip **(${this.helper.playing.name}**, need \`${neededUsers}\` more ${neededUsers == 1 ? 'user' : 'users'} to vote.`);
+                        this.reply(`Currently \`${votedUsersP}%\` of the users have voted to skip **(${this.helper.currentTrack.name}**, need \`${neededUsers}\` more ${neededUsers == 1 ? 'user' : 'users'} to vote.`);
                     }, 500);
                 } else {
                     // Temp fix...

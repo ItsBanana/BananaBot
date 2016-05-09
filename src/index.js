@@ -17,6 +17,7 @@ try {
     env.CFG_AUTH_PASSWORD = config.auth.password;
     env.CFG_PREFIX = config.prefix;
     env.CFG_STATUS = config.status;
+    env.CFG_YOUTUBE_API_KEY = config.youtube_api_key;
     env.CFG_MONGO_URL = config.mongo_url;
 } catch (e) {
     console.log(e);
@@ -48,9 +49,8 @@ let options = {
     container: (Bot) => {
         return {
             parameters: {
-                remove_after_skips: 5,
                 volume: 10,
-                youtube_api_key: 'AIzaSyDdmViX4so3V7lYsxAZuON0jaCEbqIjkEw'
+                youtube_api_key: env.CFG_YOUTUBE_API_KEY
             },
             services: {
                 'helper.music': {
@@ -61,8 +61,7 @@ let options = {
                         '@client',
                         '@logger',
                         '@brain.memory',
-                        '%volume%',
-                        '%remove_after_skips%'
+                        '%volume%'
                     ]
                 },
                 'helper.playlist': {
