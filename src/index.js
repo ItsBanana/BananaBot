@@ -2,8 +2,7 @@
 
 const pkg = require('../package');
 const env = process.env;
-const path = require('path');
-const Bot = require('bananabot-base').Bot;
+const Bot = require('./Bot');
 const MusicHelper = require('./Module/Music/Helper/MusicHelper');
 const PlaylistHelper = require('./Module/Music/Helper/PlaylistHelper');
 

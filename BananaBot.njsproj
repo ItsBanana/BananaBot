@@ -16,6 +16,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="src\Bot.js" />
     <Compile Include="src\Module\Music\AbstractCommand.js" />
     <Compile Include="src\Module\Music\Command\AddTrackCommand.js" />
     <Compile Include="src\Module\Music\Command\CreatePlaylistCommand.js" />
